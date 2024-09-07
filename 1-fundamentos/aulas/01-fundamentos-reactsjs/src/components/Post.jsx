@@ -104,7 +104,7 @@ export function Post({author, content, publishedAt}) {
                             content={comment}
                             onDeleteComment={deleteComment}
                         />);
-                })};
+                })}
             </div>
         </article>
     );

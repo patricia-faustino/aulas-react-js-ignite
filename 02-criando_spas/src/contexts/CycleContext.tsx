@@ -103,6 +103,5 @@ export function CyclesContextProvider({
         {children}
       </CyclesContext.Provider>
         
-    )
-    
+    );
 }

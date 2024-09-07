@@ -60,7 +60,7 @@ export function Home () {
                         <Play size={24} />
                         Começar
                     </StartCountdownButton>
-                )};
+                )}
             </form>
         </HomeContainer>
     );

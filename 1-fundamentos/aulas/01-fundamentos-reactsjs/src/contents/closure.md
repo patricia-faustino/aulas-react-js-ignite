@@ -1,0 +1,1 @@
+## Sempre que atualizar uma informação e essa informação depende do valor que ela tinha anteriormente é interessante utilizar o valor de função, utilizando closure

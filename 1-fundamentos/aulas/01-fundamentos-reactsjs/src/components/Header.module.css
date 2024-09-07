@@ -1,0 +1,12 @@
+/* evita interferencia para nome de classes iguais, gerando um hash para cada classe */
+.header {
+    background: hsl(0, 0%, 20%);
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem 0;
+    height: 80px;
+}
+
+.header img {
+    height: 2rem;
+}

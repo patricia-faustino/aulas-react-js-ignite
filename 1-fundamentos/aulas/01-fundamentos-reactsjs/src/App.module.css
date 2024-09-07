@@ -1,0 +1,21 @@
+.wrapper {
+    max-width: 70rem;
+    margin: 2rem auto;
+    padding: 0 1rem; /* evitar que quando a tela for diminuida o conteudo não fique grudado nas paredes da tela */
+
+    display: grid;
+    grid-template-columns: 256px 1fr; /* 1fr = 1 fraction */
+    gap: 2rem; /* espaçamento entre as colunas */
+    align-items: flex-start; /* alinhar os itens no topo */
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 87.5%; /* 14px */
+    }
+
+    .wrapper {
+        grid-template-columns: 1fr; /* 1fr = 1 fraction */
+    }
+    
+}

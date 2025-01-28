@@ -18,6 +18,6 @@ Memo:
 
 
 o que é?
-Função de ordem superior utilizada para otimizar o desempenho de componentes funcionais em React. Ele é responsável por memorizar o resultado da renderização de um componente e só renderiza se suas propriedades mudarem. Porém não deve ser utilizado como bala de prata, pois avaliar mudanças de componentes sem necessidade tras lentidão ao componente, é necessário avaliar se seu retorno HTML possui tamanho grande o suficiente para que possa avaliar e não renderizar de forma desnecessária.
+Função de ordem superior utilizada para otimizar o desempenho de componentes funcionais em React. Ele é responsável por memorizar o resultado da renderização de um componente e só renderiza se suas propriedades mudarem. Porém não deve ser utilizado como bala de prata, pois avaliar mudanças de componentes sem necessidade trás lentidão ao componente, é necessário avaliar se seu retorno HTML possui tamanho grande o suficiente para que possa avaliar e não renderizar de forma desnecessária.
 
 Motivação de uso: otimização de desempenho, renderizações condicionais a partir de mudanças de estado ou contexto, simples de implementar

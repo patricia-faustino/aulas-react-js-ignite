@@ -50,8 +50,6 @@ export function OrderTableRow({order}: OrderTableRowProps) {
           })
         })
         });
-      //  alert('Pedido cancelado com sucesso');
-
     },
   });
 

@@ -4,10 +4,14 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
 
+import { cancelOrder } from '@/api/cancel-order'
+import { GetOrdersResponse } from '@/api/get-orders'
 import { OrderStatus } from '@/components/order-status'
-import { OrderDetails } from './order-details'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { useState } from 'react'
+import { OrderDetails } from './order-details'
 
 export interface OrderTableRowProps {
   order: {
@@ -20,10 +24,41 @@ export interface OrderTableRowProps {
 }
 
 export function OrderTableRow({order}: OrderTableRowProps) {
+  const [isDetailsOpen, setDetailsOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: cancelOrderFn } = useMutation({
+    mutationFn: cancelOrder,
+    async onSuccess(_, { orderId }) {
+      const cached = queryClient.getQueriesData<GetOrdersResponse>({
+        queryKey: ['orders'],
+      });
+
+      cached.forEach(([cacheKey, cacheData]) => {
+        if(!cacheData){
+          return;
+        }
+
+        queryClient.setQueryData<GetOrdersResponse>(cacheKey, {
+          ...cacheData, 
+          orders: cacheData.orders.map((order) => {
+            if(order.orderId === orderId){
+              return {...order, status: 'canceled'};
+            }
+
+            return order;
+          })
+        })
+        });
+      //  alert('Pedido cancelado com sucesso');
+
+    },
+  });
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpen} onOpenChange={setDetailsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="xs">
               <Search className="h-3 w-3" />
@@ -31,23 +66,26 @@ export function OrderTableRow({order}: OrderTableRowProps) {
             </Button>
           </DialogTrigger>
 
-          <OrderDetails />
+          <OrderDetails open={isDetailsOpen} orderId={order.orderId}/>
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
         {order.orderId}
       </TableCell>
-      <TableCell className="text-muted-foreground">{formatDistanceToNow(order.createdAt, {
+      <TableCell className="text-muted-foreground">
+        {formatDistanceToNow(order.createdAt, {
           locale: ptBR,
           addSuffix: true,
-        })}</TableCell>
+        })}
+      </TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <OrderStatus status={order.status} />
         </div>
       </TableCell>
       <TableCell className="font-medium">{order.customerName}</TableCell>
-      <TableCell className="font-medium">{order.total.toLocaleString('pt-Br', {
+      <TableCell className="font-medium">
+        {(order.total / 100).toLocaleString('pt-Br', {
           style: 'currency',
           currency: 'BRL',
         })}
@@ -59,7 +97,12 @@ export function OrderTableRow({order}: OrderTableRowProps) {
         </Button>
       </TableCell>
       <TableCell>
-        <Button variant="ghost" size="xs">
+        <Button 
+          disabled={!['pending', 'processing'].includes(order.status)}
+          variant="ghost" 
+          size="xs"
+          onClick={() => cancelOrderFn({ orderId: order.orderId })}
+        >
           <X className="mr-2 h-3 w-3" />
           Cancelar
         </Button>

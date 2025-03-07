@@ -1,12 +1,17 @@
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, useNavigate } from "react-router-dom";
 import { Toaster } from 'sonner';
 import { queryClient } from "./lib/react-query";
 import { router } from "./routes";
+import { isAxiosError } from "axios";
+import { useEffect } from "react";
+import { api } from "./lib/axios";
 
 export function App() {
+  
+
   return(
     <ThemeProvider defaultTheme="dark" storageKey="pizzashop-theme" >
       <HelmetProvider>

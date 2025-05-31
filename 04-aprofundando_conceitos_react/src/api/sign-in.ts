@@ -1,10 +1,10 @@
-import { api } from '@/lib/axios';
+import { api } from "@/lib/axios";
 
 export interface SignInBody {
-    email: string;
+  email: string;
 }
 
 export async function signIn({ email }: SignInBody) {
-    console.log(email);
-    await api.post('/authenticate', {email});
+  console.log(email);
+  await api.post("/authenticate", { email });
 }

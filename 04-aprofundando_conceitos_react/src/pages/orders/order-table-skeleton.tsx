@@ -1,8 +1,8 @@
-import { Search } from 'lucide-react'
+import { Search } from "lucide-react";
 
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { TableCell, TableRow } from '@/components/ui/table'
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 export function OrderTableSkeleton() {
   return Array.from({ length: 10 }).map((_, i) => {
@@ -36,6 +36,6 @@ export function OrderTableSkeleton() {
           <Skeleton className="h-4 w-[92px]" />
         </TableCell>
       </TableRow>
-    )
-  })
+    );
+  });
 }

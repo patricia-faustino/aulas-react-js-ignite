@@ -1,11 +1,11 @@
-import { Building, ChevronDown, LogOut } from 'lucide-react'
+import { Building, ChevronDown, LogOut } from "lucide-react";
 
-import { getManagedRestaurant } from '@/api/get-managed-restaurant'
-import { getProfile } from '@/api/get-profile'
+import { getManagedRestaurant } from "@/api/get-managed-restaurant";
+import { getProfile } from "@/api/get-profile";
 
-import { StoreProfileDialog } from './store-profile-dialog'
-import { Button } from './ui/button'
-import { Dialog, DialogTrigger } from './ui/dialog'
+import { StoreProfileDialog } from "./store-profile-dialog";
+import { Button } from "./ui/button";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,32 +13,32 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { Skeleton } from './ui/skeleton'
-import { signOut } from '@/api/sign-out'
-import { useNavigate } from 'react-router-dom'
-import { useQuery, useMutation } from '@tanstack/react-query'
+} from "./ui/dropdown-menu";
+import { Skeleton } from "./ui/skeleton";
+import { signOut } from "@/api/sign-out";
+import { useNavigate } from "react-router-dom";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 export function AccountMenu() {
   const navigate = useNavigate();
 
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
-    queryKey: ['profile'],
+    queryKey: ["profile"],
     queryFn: getProfile,
   });
 
   const { data: managedRestaurant, isLoading: isLoadingManagedRestaurant } =
     useQuery({
-      queryKey: ['managed-restaurant'],
+      queryKey: ["managed-restaurant"],
       queryFn: getManagedRestaurant,
       staleTime: Infinity,
-  });
+    });
 
   const { mutateAsync: signOutFn, isPending: isSigningOut } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
-      navigate('/sign-in', { replace: true });   
-    }
+      navigate("/sign-in", { replace: true });
+    },
   });
 
   return (
@@ -96,5 +96,5 @@ export function AccountMenu() {
 
       <StoreProfileDialog />
     </Dialog>
-  )
+  );
 }

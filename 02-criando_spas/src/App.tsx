@@ -1,11 +1,10 @@
-import {ThemeProvider} from 'styled-components'
-import './App.css'
-import { defaultTheme } from './styles/themes/default'
-import { GlobalStyle } from './styles/global'
-import { BrowserRouter } from 'react-router-dom'
-import { Router } from './Router'
-import { CyclesContextProvider } from './contexts/CycleContext'
-
+import { ThemeProvider } from "styled-components";
+import "./App.css";
+import { defaultTheme } from "./styles/themes/default";
+import { GlobalStyle } from "./styles/global";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./Router";
+import { CyclesContextProvider } from "./contexts/CycleContext";
 
 function App() {
   return (
@@ -15,9 +14,9 @@ function App() {
           <Router />
         </CyclesContextProvider>
       </BrowserRouter>
-      <GlobalStyle/>
+      <GlobalStyle />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

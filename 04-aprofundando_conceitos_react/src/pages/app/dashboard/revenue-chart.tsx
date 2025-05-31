@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
-import { subDays } from 'date-fns'
-import { useMemo, useState } from 'react'
-import { DateRange } from 'react-day-picker'
+import { useQuery } from "@tanstack/react-query";
+import { subDays } from "date-fns";
+import { useMemo, useState } from "react";
+import { DateRange } from "react-day-picker";
 import {
   CartesianGrid,
   Line,
@@ -9,44 +9,44 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
-} from 'recharts'
-import colors from 'tailwindcss/colors'
+} from "recharts";
+import colors from "tailwindcss/colors";
 
-import { getDailyRevenueInPeriod } from '@/api/get-daily-revenue-in-period'
+import { getDailyRevenueInPeriod } from "@/api/get-daily-revenue-in-period";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { DateRangePicker } from '@/components/ui/date-range-picker'
-import { Label } from '@/components/ui/label'
-import { Loader2 } from 'lucide-react'
+} from "@/components/ui/card";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 export function RevenueChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: subDays(new Date(), 7),
     to: new Date(),
-  })
+  });
 
   const { data: dailyRevenueInPeriod } = useQuery({
-    queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
+    queryKey: ["metrics", "daily-revenue-in-period", dateRange],
     queryFn: () =>
       getDailyRevenueInPeriod({
         from: dateRange?.from,
         to: dateRange?.to,
       }),
-  })
+  });
 
   const chartData = useMemo(() => {
     return dailyRevenueInPeriod?.map((chartItem) => {
       return {
         date: chartItem.date,
         receipt: chartItem.receipt / 100,
-      }
-    })
-  }, [dailyRevenueInPeriod])
+      };
+    });
+  }, [dailyRevenueInPeriod]);
 
   return (
     <Card className="col-span-6">
@@ -74,9 +74,9 @@ export function RevenueChart() {
                 tickLine={false}
                 width={80}
                 tickFormatter={(value: number) =>
-                  value.toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
+                  value.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
                   })
                 }
               />
@@ -89,12 +89,12 @@ export function RevenueChart() {
               />
             </LineChart>
           </ResponsiveContainer>
-          ) : (
-            <div className="flex h-[240px] w-full items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            </div>
+        ) : (
+          <div className="flex h-[240px] w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

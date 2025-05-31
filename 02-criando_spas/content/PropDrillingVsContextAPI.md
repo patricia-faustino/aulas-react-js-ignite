@@ -1,4 +1,5 @@
 # Prop Drilling vs Context API
+
 - Prop Drilling: quando temos MUITAS propriedades para comunicação entre componentes
 - Context API -> Permite compartilhar informações entre componentes ao mesmo tempo sem a necessidade de passar props
 
